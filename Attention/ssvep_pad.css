@@ -1,0 +1,51 @@
+#ssvep-hud{
+  position:fixed;
+  right:24px;
+  top:24px;              
+  z-index:9999;
+  font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.ssvpad-wrap{
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  background:rgba(8,12,24,.65);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; padding:10px 10px 12px;
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+  backdrop-filter: blur(4px);
+}
+
+.ssvpad-toolbar{ display:flex; gap:8px; align-items:center; }
+.ssvpad-badge{
+  font-size:12px; padding:3px 8px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.12); color:#cfe8ff; opacity:.9;
+}
+
+.ssvpad-pad{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(3, 166px);
+  grid-template-rows: repeat(3, 166px);
+  align-items:center; justify-items:center;
+}
+
+.ssvpad-ph { width:166px; height:166px; }
+
+.ssvpad-key{
+  display:grid; place-items:center;           /* garante seta 100% centralizada */
+  width:148px; height:148px;                  /* preenche bem a célula 166px */
+  border-radius:14px;
+  border:2px solid #2c3a55;
+  background:linear-gradient(180deg,#111a2a,#0b1320);
+  color:#def; font-weight:700; font-size:42px; /* seta maior */
+  cursor:pointer; user-select:none; touch-action:manipulation;
+  transition:transform .08s ease, box-shadow .08s ease;
+  box-shadow:0 6px 18px rgba(2,6,23,.45), inset 0 -2px 0 rgba(255,255,255,.04);
+}
+
+.ssvpad-key:active, .ssv-active { transform:translateY(3px) scale(.98); }
+
+.ssv-on  { background:#fff; color:#07101e; border-color:#fff; }
+.ssv-off { background:#000; color:#fff; border-color:#000; }
+
+
+.ssvpad-hint { font-size:11px; color:#a8c1d9; opacity:.9; margin:0; }

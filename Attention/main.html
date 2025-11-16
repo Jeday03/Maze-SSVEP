@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attention</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="telaInicial" class="tela">
+        <h1>Maze Game</h1>
+        <p>Bem-vindo ao Maze Game! Clique em Jogar para começar.</p>
+        <input type="text" id="inputID" placeholder="Enter ID">
+        <div id="menu">
+            <button class="button" id="confirmButton">Confirmar ID</button>
+            <button class="button" id="treinamento">Treinamento</button>
+            <button class="button" id="startButton">Jogar</button>
+            <button class="button" id="ranking">Ranking</button>
+        </div>
+    </div>
+
+    <div id="telaTraining" class="tela" style="display: none;">
+        <canvas id="mazeCanvas"></canvas>
+        <div id="trainingMenu">
+            <button class="button" id="trainingButton1">Retornar</button>
+        </div>
+    </div>
+
+    <div id="canvas-container" class="tela" style="display: none;">
+        <canvas id="gamingCanvas"></canvas>
+        <div id="gamingMenu">
+            <div id="gamingInfo">
+                <div id="pontuacao">Pontuação: <span id="score">0</span></div>
+                <div id="speed">Velocidade: <span id="speedValue">0.015</span></div>
+                <div id="temporizador">Tempo: <span id="minutos">02</span>:<span id="segundos">00</span></div>
+            </div>
+            <button class="button" id="PausarGaming">Pausar</button>
+            <button class="button" id="menuGaming">Menu</button>
+        </div>
+    </div>
+
+    <div id="telaRanking" class="tela" style="display: none;">
+        <h1>Ranking</h1>
+        <table id="ranking-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Score Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Tabela será preenchida via JavaScript -->
+            </tbody>
+        </table>
+        <div class="button-container">
+            <button class="button" id="calcularScoresButton">Atualizar Scores</button>
+            <button class="button" id="voltarRanking">Voltar</button>
+        </div>
+    </div>
+
+    <div id="telaVitoria" class="tela" style="display: none;">
+        <h1>Parabéns!</h1>
+        <p>Você completou todos os níveis do PacMaze!</p>
+        <p>Pontuação Final: <span id="finalScore">0</span></p>
+        <button class="button" id="voltarInicio">Voltar ao Início</button>
+    </div>
+    <link rel="stylesheet" href="./ssvep_pad.css">
+    <div id="ssvep-hud" aria-label="SSVEP arrows"></div>
+    <script src="./ssvep_pad.js"></script>
+    <script src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</body>
+</html>

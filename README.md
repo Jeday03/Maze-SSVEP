@@ -21,7 +21,7 @@ Isso iniciará o jogo usando apenas o teclado/mouse sem qualquer leitura de EEG.
 Execute o script do BrainFlow apontando para sua porta COM e canais escolhidos:
 
 ```bash
-python bci_brainflow.py --board-id 2 --serial-port COM3 --chan-idx "9,10,11,12,13,14,15,16"
+python bci_brainflow.py --board-id 2 --serial-port COM3
 ```
 
 ### 2) Rodar o servidor com suporte a BCI

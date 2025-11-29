@@ -154,9 +154,17 @@ def main():
     ap.add_argument("--serial-number", type=str, default="")
     ap.add_argument("--file", type=str, default="")
 
-    ap.add_argument("--chan-idx", type=str, default="",
-                    help='Lista de índices de canais EEG do dispositivo (ex: "9,10,11,12"). '
-                         'Usa apenas índices que pertencem à lista EEG do BrainFlow.')
+    DEFAULT_CHAN_IDX = "9,10,11,12,13,14,15,16"
+
+    ap.add_argument(
+    "--chan-idx",
+    type=str,
+    default=DEFAULT_CHAN_IDX,
+    help=(
+        'Lista de índices de canais EEG do dispositivo (ex: "9,10,11,12"). '
+        "Se nada for passado, usa por padrão: " + DEFAULT_CHAN_IDX
+    ),
+)
     args = ap.parse_args()
 
     BoardShim.enable_dev_board_logger()

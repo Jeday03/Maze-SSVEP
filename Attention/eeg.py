@@ -12,20 +12,19 @@ def get_regg():
     t0 = datetime.now()
     signal = np.random.rand(16, 63)
     
-    # Converte os datetime para strings no formato ISO 8601
     time_list = np.array([(t0 + timedelta(seconds=i/freq)).isoformat() for i in range(63)])
     time_list = time_list.reshape((1, 63))
     
     return np.concatenate([time_list, signal], axis=0)
 
 async def send_matrix():
-    uri = "ws://localhost:8765"  # URL do WebSocket Server (Node.js)
+    uri = "ws://localhost:8765"
     async with websockets.connect(uri) as websocket:
         while True:
             matrix = get_regg()
-            matrix_list = matrix[1][0].tolist() # Retirar [0]dps
-            await websocket.send(json.dumps({"matrix": matrix_list}))  # Envia a matriz para o WebSocket
-            await asyncio.sleep(0.5)  # Espera 0.5 segundos
+            matrix_list = matrix[1][0].tolist()
+            await websocket.send(json.dumps({"matrix": matrix_list}))
+            await asyncio.sleep(0.5)
 
 @app.on_event("startup")
 async def startup_event():

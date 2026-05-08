@@ -159,16 +159,16 @@ window.handleBCICommand = function(direction) {
     // Aplica nova direção
     switch(direction) {
         case "up":
-            playervy = -3;
+            playervy = -4;
             break;
         case "down":
-            playervy = 3;
+            playervy = 4;
             break;
         case "left":
-            playervx = -3;
+            playervx = -4;
             break;
         case "right":
-            playervx = 3;
+            playervx = 4;
             break;
     }
     

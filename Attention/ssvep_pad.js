@@ -12,7 +12,7 @@ const HOLD_MS = 200;
         <span class="ssvpad-badge">Espaço: iniciar</span>
         <span class="ssvpad-badge">F: tela cheia</span>
       </div>
-      <p class="ssvpad-hint">Frequências: ↑ 12 Hz · ← 10 Hz · → 15 Hz · ↓ 8 Hz</p>
+      <p class="ssvpad-hint">Frequências: ↑ 12 Hz · ← 14 Hz · → 11 Hz · ↓ 8 Hz</p>
       <div class="ssvpad-pad" role="application" aria-label="Teclado SSVEP">
         <div class="ssvpad-ph" aria-hidden="true"></div>
         <button class="ssvpad-key" data-dir="up"    id="ssv-up"    aria-label="Cima">↑</button>
@@ -30,7 +30,7 @@ const HOLD_MS = 200;
   `;
 
   // ---- Config de flicker ---- //
-  const FREQS_HZ = { up:12.0, left:10.0, right:15.0, down:8.0 };
+  const FREQS_HZ = { up:12.0, left:14.0, right:11.0, down:8.0 };
   const PHASE =   { up:0.0,  left:Math.PI/2, right:Math.PI, down:3*Math.PI/2 };
   const dutyCycle = 0.5;
 

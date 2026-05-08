@@ -14,27 +14,26 @@ from brainflow.data_filter import (
     DataFilter, FilterTypes, DetrendOperations, NoiseTypes
 )
 
-# ===================== CONFIG PADRÃO =====================
+#CONFIG PADRÃO
 FREQS = {
     "up":    12.0,
-    "left":  10.0,
-    "right": 15.0,
+    "left":  14.0,
+    "right": 11.0,
     "down":   8.0,
 }
 ORDER        = ["up", "left", "right", "down"]
-HARMONICS    = 4
-WINDOW_SEC   = 2.0
+HARMONICS    = 3
+WINDOW_SEC   = 2.5
 STEP_SEC     = 0.2
 BAND_LO_HZ   = 5.0
 BAND_HI_HZ   = 40.0
-NOTCH_HZ     = 50.0
-MIN_CONF     = 0.0
+NOTCH_HZ     = 60.0
+MIN_CONF     = 0.35
 WS_HOST      = "localhost"
 WS_PORT      = 8767
-# ========================================================
 
 
-# ========================= CCA ==========================
+#CCA
 def build_ref(freq: float, sfreq: float, n_samples: int, harmonics: int) -> np.ndarray:
     t = np.arange(n_samples) / sfreq
     Y = []
@@ -57,16 +56,13 @@ def run_cca(X: np.ndarray, sfreq: float) -> Tuple[str, float]:
         if r > best_r:
             best_r, best_dir = r, d
     return best_dir, best_r
-# =======================================================
 
 
-# =================== PIPELINE BRAINFLOW =================
+#PIPELINE BRAINFLOW
 def select_eeg_channels(board_id: int, prefer_idx: List[int] | None) -> List[int]:
     """Retorna índices de canais EEG do BrainFlow, opcionalmente filtrados por --chan-idx."""
     all_eeg = BoardShim.get_eeg_channels(board_id)
     if prefer_idx:
-        # normaliza possíveis índices 1-based para 0-based no contexto "da lista all_eeg"
-        # aqui prefer_idx são índices globais do dispositivo (0..N-1). Mantem apenas os válidos.
         ok = [i for i in prefer_idx if i in all_eeg]
         return ok if ok else all_eeg
     return all_eeg
@@ -84,22 +80,17 @@ async def ws_loop(board: BoardShim, board_id: int, eeg_ch: list[int]):
 
         try:
             while True:
-                # pegar só o delta desde a última chamada
-                data = board.get_board_data()  # (n_channels, n_new_samples)
+                data = board.get_board_data()
                 if data.shape[1] > 0:
-                    # extrair apenas EEG e empilhar no buffer
-                    x_new = data[eeg_ch, :]                      # (n_eeg, n_new)
-                    buf   = np.concatenate([buf, x_new], axis=1) # cresce
+                    x_new = data[eeg_ch, :]
+                    buf   = np.concatenate([buf, x_new], axis=1)
 
-                    # manter apenas a janela necessária
                     if buf.shape[1] > need:
                         buf = buf[:, -need:]
 
-                    # quando tiver a janela cheia, processa
                     if buf.shape[1] == need:
                         X = buf.copy()
 
-                        # Pré-processamento por canal
                         for ch in range(X.shape[0]):
                             DataFilter.detrend(X[ch], DetrendOperations.LINEAR.value)
                             DataFilter.remove_environmental_noise(
@@ -111,10 +102,8 @@ async def ws_loop(board: BoardShim, board_id: int, eeg_ch: list[int]):
                                 FilterTypes.BUTTERWORTH.value, 0
                             )
 
-                        # CCA
                         direction, conf = run_cca(X, sfreq)
 
-                        # Enviar sempre que passar do limiar (use 0.0 para ver tudo)
                         if conf >= MIN_CONF:
                             msg = {
                                 "intent": direction,
@@ -154,7 +143,7 @@ def main():
     ap.add_argument("--serial-number", type=str, default="")
     ap.add_argument("--file", type=str, default="")
 
-    DEFAULT_CHAN_IDX = "9,10,11,12,13,14,15,16"
+    DEFAULT_CHAN_IDX = "1,5,6,9,10"
 
     ap.add_argument(
     "--chan-idx",
